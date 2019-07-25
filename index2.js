@@ -32,7 +32,7 @@ app.listen(PORT, function () {
 });
 
 app.get('/', function (req, res) {
-    res.send('Ngrok is working! - Path Hit: ' + request.url);
+    res.send('Ngrok is working2! - Path Hit: ' + request.url);
 });
 
 app.get('/oauth', function(req, res) {
@@ -61,11 +61,11 @@ app.get('/oauth', function(req, res) {
 
 });
 
-app.get('/auth/redirect', function(req, res) {
+app.get('/redirect', function(req, res) {
    request(
        {
            url: 'https://slack.com/api/oauth.access',
-           qs: {code: req.query.code, client_id: clientId, client_secret: clientSecret},
+           qs: {code: req.query.code, client_id: clientId, client_secret: clientSecret, redirect_uri: 'https://self-signed.looker.com:9999/login'},
            method: 'GET',
        }, function (error, responce, body) {
            var JSONresponse = JSON.parse(body)
@@ -91,11 +91,14 @@ app.post('/command', function(req, res) {
 });
 
 
+
+
+
 app2.listen(PORT2, function () {
     console.log("Server 2 listening on: http://localhost:%s", PORT2);
 });
 
-app2.get('/signin', function (req, res){
+app.get('/signin', function (req, res){
     res.sendFile(__dirname + '/sign_in_with_slack.html')
 });
 
